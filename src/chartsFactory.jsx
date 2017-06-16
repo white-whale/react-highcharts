@@ -13,7 +13,8 @@ module.exports = function (chartType, Highcharts){
       isPureConfig: PropTypes.bool,
       neverReflow: PropTypes.bool,
       callback: PropTypes.func,
-      domProps: PropTypes.object
+      domProps: PropTypes.object,
+      reference: PropTypes.string.isRequired
     },
 
     defaultProps: {
@@ -30,7 +31,7 @@ module.exports = function (chartType, Highcharts){
         ...config,
         chart: {
           ...chartConfig,
-          renderTo: this.refs.chart
+          renderTo: this.refs[this.props.reference]
         }
       }, this.props.callback);
 
@@ -65,8 +66,10 @@ module.exports = function (chartType, Highcharts){
     },
 
     render: function (){
-      return <div ref="chart" {...this.props.domProps} />;
+
+      return <div ref={this.props.reference} {...this.props.domProps} />;
     }
+
   });
 
   result.Highcharts = Highcharts;
@@ -75,4 +78,3 @@ module.exports = function (chartType, Highcharts){
   };
   return result;
 };
-
